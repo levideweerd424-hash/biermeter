@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10131c">
+<title>Biermeter — Alcoholtracker</title>
+<style>
+:root{--bg:#0c1018;--panel:#151b27;--panel2:#1b2432;--text:#eef3fb;--muted:#99a7bb;--line:#2b3546;--green:#65d69a;--yellow:#f5c85b;--orange:#ff9d57;--red:#ff6878;--blue:#7eb8ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1a2637 0,#0c1018 48%);color:var(--text);font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:940px;margin:auto;padding:24px 16px 60px}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#254d40,#173128);font-size:22px}.brand h1{font-size:21px;margin:0}.brand p{margin:0;color:var(--muted);font-size:12px}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:11px;padding:10px 13px;font-weight:650;cursor:pointer}.btn:hover{filter:brightness(1.12)}.primary{background:linear-gradient(135deg,#317f61,#24654d);border:0}.danger{color:#ff9ba6;border-color:#61313d}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:15px}.card{background:linear-gradient(180deg,rgba(25,33,47,.96),rgba(18,24,35,.96));border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 12px 35px #0002}.hero{min-height:225px;position:relative;overflow:hidden}.hero:after{content:"🍺";position:absolute;right:10px;bottom:-18px;font-size:125px;opacity:.08;transform:rotate(-15deg)}.eyebrow{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:700}.big{font-size:clamp(42px,8vw,65px);line-height:1.05;font-weight:800;letter-spacing:-.04em;margin:8px 0}.big small{font-size:20px;color:var(--muted);letter-spacing:0}.status{display:inline-flex;align-items:center;gap:7px;border-radius:99px;padding:7px 11px;font-weight:700;font-size:13px;background:#22332c;color:var(--green)}.status.yellow{background:#40351f;color:var(--yellow)}.status.orange{background:#432e22;color:var(--orange)}.status.red{background:#44252d;color:var(--red)}.sub{color:var(--muted);font-size:13px;margin-top:8px}.progress{height:9px;background:#293344;border-radius:10px;overflow:hidden;margin:18px 0 7px}.progress span{height:100%;display:block;width:0;background:linear-gradient(90deg,var(--green),var(--yellow),var(--orange),var(--red));transition:width .25s}.notice{display:none;border-radius:14px;padding:13px 14px;margin:15px 0;font-weight:700}.notice.show{display:block}.notice.warn{background:#43351f;border:1px solid #7a5a2c;color:#ffd98a}.notice.stop{background:#48252d;border:1px solid #803c4a;color:#ffb1bb}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}.stat{background:#111722;border:1px solid #263142;border-radius:13px;padding:12px}.stat strong{display:block;font-size:21px}.stat span{font-size:12px;color:var(--muted)}h2{font-size:17px;margin:0 0 14px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field.full{grid-column:1/-1}label{display:block;color:var(--muted);font-size:12px;font-weight:650;margin-bottom:5px}input,select{width:100%;padding:11px 12px;background:#0e1420;border:1px solid #303c50;border-radius:10px;color:var(--text);font:inherit}input:focus,select:focus{outline:2px solid #497baf;outline-offset:1px}.form-actions{display:flex;gap:8px;margin-top:13px}.form-actions button{flex:1}.list{display:flex;flex-direction:column;gap:9px}.drink{display:flex;align-items:center;gap:10px;background:#111722;border:1px solid #263142;padding:11px;border-radius:12px}.drinkicon{width:37px;height:37px;display:grid;place-items:center;border-radius:11px;background:#243246;font-size:18px}.drinkmain{flex:1;min-width:0}.drinkmain b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.drinkmain small{color:var(--muted)}.eq{text-align:right;font-weight:750;white-space:nowrap}.eq small{display:block;color:var(--muted);font-weight:500}.del{border:0;background:transparent;color:#9aa8bb;cursor:pointer;font-size:18px;padding:5px}.del:hover{color:var(--red)}.empty{padding:25px 12px;text-align:center;color:var(--muted);border:1px dashed #344055;border-radius:12px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.sectionhead h2{margin:0}.foot{margin-top:18px;color:var(--muted);font-size:12px;text-align:center}.historyday{margin-top:18px}.historyday h3{margin:0 0 9px;font-size:14px;color:#c8d4e4}.actions{display:flex;gap:8px;flex-wrap:wrap}.tiny{font-size:12px;padding:8px 10px}.modalback{display:none;position:fixed;inset:0;background:#0009;align-items:center;justify-content:center;padding:18px;z-index:10}.modalback.show{display:flex}.modal{max-width:430px;width:100%;background:#171e2b;border:1px solid var(--line);border-radius:18px;padding:20px}.modal h2{margin-bottom:8px}.modal p{color:#c3cede}.modalbuttons{display:flex;justify-content:flex-end;gap:9px;margin-top:16px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.wrap{padding:17px 12px 45px}.header{align-items:flex-start}.header .btn{padding:8px 10px}.hero{min-height:205px}.formgrid{grid-template-columns:1fr 1fr}.card{padding:15px}.stats{gap:8px}}
+.cloud-status{margin:14px 0;padding:10px 12px;border-radius:10px;font-size:13px}.cloud-status.pending{background:#e9eef5;color:#34445a}.cloud-status.ok{background:#e6f6e9;color:#176534}.cloud-status.error{background:#fff0e8;color:#9b3412}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="header">
+    <div class="brand"><div class="logo">🍺</div><div><h1>Biermeter</h1><p>Jouw persoonlijke alcoholtracker</p></div></div>
+    <button class="btn tiny" id="exportBtn">⬇ Export CSV</button>
+  </header>
+
+  <div class="grid">
+    <section class="card hero">
+      <div class="eyebrow">Vandaag · equivalent aan bier (33 cl / 5%)</div>
+      <div class="big"><span id="todayTotal">0,00</span> <small>🍺</small></div>
+      <div id="status" class="status">Geen alcohol geregistreerd</div>
+      <div class="progress"><span id="progressbar"></span></div>
+      <div class="sub" id="statusText">Je registratie voor vandaag verschijnt hier.</div>
+      <div id="notice" class="notice"></div>
+      <div class="stats">
+        <div class="stat"><strong id="todayDrinks">0</strong><span>Drankjes geregistreerd</span></div>
+        <div class="stat"><strong id="totalAlcohol">0,0 g</strong><span>Geschatte pure alcohol vandaag</span></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>＋ Drank toevoegen</h2><p class="sub" style="margin-top:-8px;margin-bottom:12px">Je drankje wordt omgerekend naar standaardbier: <strong>33 cl · 5% alcohol</strong>.</p>
+      <form id="drinkForm">
+        <div class="formgrid">
+          <div class="field full"><label for="name">Naam drank</label><input id="name" placeholder="Bijv. pils, tripel, wijn, whisky" required maxlength="70"></div>
+          <div class="field"><label for="percentage">Alcoholpercentage van je drankje (%)</label><input id="percentage" type="number" min="0.1" max="100" step="0.1" placeholder="5" required></div>
+          <div class="field"><label for="amount">Inhoud van je drankje (ml)</label><input id="amount" type="number" min="1" max="5000" step="1" placeholder="330" required></div>
+          <div class="field full"><label for="datetime">Datum en tijd</label><input id="datetime" type="datetime-local" required></div>
+        </div>
+        <div class="form-actions"><button class="btn primary" type="submit">Drank toevoegen</button><button class="btn" type="reset">Leegmaken</button></div>
+      </form>
+    </section>
+  </div>
+
+  <section class="card" style="margin-top:15px">
+    <div class="sectionhead"><h2>Dranken van vandaag</h2><span class="sub" id="todayDate"></span></div>
+    <div class="list" id="todayList"></div>
+  </section>
+
+  <section class="card" style="margin-top:15px">
+    <div class="sectionhead"><h2>Geschiedenis</h2><div class="actions"><button class="btn tiny" id="clearAll">Alles verwijderen</button></div></div>
+    <div id="history"></div>
+  </section>
+
+  <div id="cloudStatus" class="cloud-status pending">Verbinden met database…</div>
+<div class="foot">Je registraties worden beveiligd opgeslagen in Supabase en gekoppeld aan deze browsergebruiker. Dit is een grove alcoholberekening, geen meting van je bloedalcoholgehalte of daadwerkelijke dronkenschap. Alcohol beïnvloedt mensen verschillend. Drink niet verder om een doel of niveau te bereiken en combineer alcohol niet met medicatie.</div>
+</div>
+
+<div class="modalback" id="modal">
+  <div class="modal"><h2 id="modalTitle">Waarschuwing</h2><p id="modalMessage"></p><div class="modalbuttons"><button class="btn" id="modalClose">Begrepen</button></div></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://tevuqqigftwjlaalspal.supabase.co";
+const SUPABASE_KEY="sb_publishable_xhO4IE7iZo5e8qkTH2ppDQ_G1Fahkc0";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let currentUser=null;
+let syncReady=false;
+const STORAGE_KEY='biermeter_drinks_v1';
+const BASE_ML=330, BASE_ABV=5;
+let drinks=load();
+let shownWarnings={};
+function load(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]')}catch(e){return []}}
+function saveLocal(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(drinks));return true}catch(e){return false}}
+function save(){return saveLocal()}
+function fromDb(r){return {id:r.id,name:r.drink_name,percentage:Number(r.alcohol_percentage),amount:Number(r.volume_ml),datetime:r.consumed_at}}
+async function initCloud(){try{let {data:{session},error}=await supabaseClient.auth.getSession();if(error)throw error;if(!session){let res=await supabaseClient.auth.signInAnonymously();if(res.error)throw res.error;session=res.data.session;}currentUser=session.user;let {data,error:fetchErr}=await supabaseClient.from('drinks').select('*').order('consumed_at',{ascending:false});if(fetchErr)throw fetchErr;drinks=(data||[]).map(fromDb);saveLocal();syncReady=true;render();setCloudStatus('✓ Verbonden met database','ok');}catch(err){console.error(err);setCloudStatus('Databaseverbinding mislukt: '+(err.message||err),'error');alert('Verbinden met Supabase lukt niet. Controleer of Anonymous Sign-ins is ingeschakeld in Supabase Auth en of de SQL-tabel en policies zijn aangemaakt.\n\n'+(err.message||err));}}
+function setCloudStatus(text,kind){let el=document.getElementById('cloudStatus');if(el){el.textContent=text;el.className='cloud-status '+kind}}
+async function cloudInsert(d){if(!syncReady||!currentUser)throw new Error('Database is nog niet verbonden');const {error}=await supabaseClient.from('drinks').insert({user_id:currentUser.id,drink_name:d.name,alcohol_percentage:d.percentage,volume_ml:d.amount,consumed_at:new Date(d.datetime).toISOString()});if(error)throw error}
+async function cloudDelete(id){const {error}=await supabaseClient.from('drinks').delete().eq('id',id);if(error)throw error}
+async function cloudDeleteAll(){const {error}=await supabaseClient.from('drinks').delete().eq('user_id',currentUser.id);if(error)throw error}
+function equivalent(d){return (Number(d.amount)*Number(d.percentage))/(BASE_ML*BASE_ABV)}
+function pureAlcohol(d){return Number(d.amount)*(Number(d.percentage)/100)*0.789}
+function localDateKey(date=new Date()){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`}
+function todayKey(){return localDateKey()}
+function keyFor(d){return localDateKey(new Date(d.datetime))}
+function todayDrinks(){return drinks.filter(d=>keyFor(d)===todayKey()).sort((a,b)=>new Date(a.datetime)-new Date(b.datetime))}
+function totalToday(){return todayDrinks().reduce((s,d)=>s+equivalent(d),0)}
+function fmt(n){return n.toFixed(2).replace('.',',')}
+function fmtDate(date){return new Date(date).toLocaleString('nl-NL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}
+function statusFor(n){
+ if(n<=0)return {label:'Geen alcohol geregistreerd',class:'',text:'Je registratie voor vandaag verschijnt hier.'};
+ if(n<=2)return {label:'Licht aangeschoten · indicatie',class:'',text:'Alcohol kan je reactievermogen al beïnvloeden. Dit is geen betrouwbare voorspelling van hoe je je voelt.'};
+ if(n<3)return {label:'Let op: aangeschoten',class:'yellow',text:'Je hebt meer dan 2 equivalente biertjes geregistreerd. Neem geen risico’s: stop bij voorkeur met drinken.'};
+ if(n<4)return {label:'Medium aangeschoten · indicatie',class:'orange',text:'Je alcoholinname neemt toe. Drink niet verder; zorg voor water, eten en een veilige omgeving.'};
+ if(n<5)return {label:'Erg aangeschoten · indicatie',class:'orange',text:'Stop met alcohol. Ga niet fietsen of rijden en blijf bij iemand die je vertrouwt.'};
+ return {label:'Hoge alcoholinname · stop',class:'red',text:'Stop met drinken. Meer alcohol vergroot risico op ernstige intoxicatie. Laat iemand bij je blijven.'};
+}
+function render(){
+ const list=todayDrinks(), n=totalToday(), s=statusFor(n);
+ document.getElementById('todayTotal').textContent=fmt(n);
+ const status=document.getElementById('status');status.className='status '+s.class;status.textContent=s.label;
+ document.getElementById('statusText').textContent=s.text;
+ document.getElementById('progressbar').style.width=Math.min(n/5*100,100)+'%';
+ document.getElementById('todayDrinks').textContent=list.length;
+ document.getElementById('totalAlcohol').textContent=Math.round(list.reduce((sum,d)=>sum+pureAlcohol(d),0)+'')+' g';
+ document.getElementById('todayDate').textContent=new Date().toLocaleDateString('nl-NL',{weekday:'long',day:'numeric',month:'long'});
+ const notice=document.getElementById('notice');notice.className='notice';notice.textContent='';
+ if(n>5){notice.className='notice show stop';notice.textContent='🛑 Stop met drinken. Je hebt 5 of meer standaardbier-equivalenten geregistreerd. Meer drinken kan gevaarlijk zijn.'}
+ else if(n>=5){notice.className='notice show stop';notice.textContent='🛑 Stop met drinken anders krijg je mogelijk een kater. Meer alcohol kan ook gevaarlijk zijn.'}
+ else if(n>2){notice.className='notice show warn';notice.textContent='⚠️ Let op: aangeschoten. Je hebt meer dan 2 standaardbier-equivalenten geregistreerd. Stop bij voorkeur met drinken.'}
+ document.getElementById('todayList').innerHTML=list.length?list.map(d=>row(d)).join(''):'<div class="empty">Nog geen drankjes toegevoegd vandaag.</div>';
+ renderHistory();
+}
+function row(d){return `<div class="drink"><div class="drinkicon">🍻</div><div class="drinkmain"><b>${escapeHtml(d.name)}</b><small>${d.amount} ml · ${d.percentage}% · ${fmtDate(d.datetime)}</small></div><div class="eq">${fmt(equivalent(d))} 🍺<small>equivalent</small></div><button class="del" title="Verwijderen" data-delete="${d.id}">×</button></div>`}
+function renderHistory(){
+ const grouped={};
+ [...drinks].sort((a,b)=>new Date(b.datetime)-new Date(a.datetime)).forEach(d=>{const k=keyFor(d);(grouped[k] ||= []).push(d)});
+ const keys=Object.keys(grouped).sort((a,b)=>b.localeCompare(a));
+ document.getElementById('history').innerHTML=keys.length?keys.map(k=>{
+ const total=grouped[k].reduce((s,d)=>s+equivalent(d),0);
+ const date=new Date(k+'T12:00:00').toLocaleDateString('nl-NL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+ return `<div class="historyday"><h3>${date} · ${fmt(total)} 🍺 equivalent</h3><div class="list">${grouped[k].sort((a,b)=>new Date(b.datetime)-new Date(a.datetime)).map(row).join('')}</div></div>`
+ }).join(''):'<div class="empty">Je geschiedenis is nog leeg.</div>';
+}
+function escapeHtml(str){return String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function setNow(){const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());document.getElementById('datetime').value=d.toISOString().slice(0,16)}
+document.getElementById('drinkForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ if(!syncReady){alert('De database is nog niet verbonden. Wacht even en probeer opnieuw.');return;}
+ const d={id:(window.crypto&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(36).slice(2)),name:document.getElementById('name').value.trim(),percentage:Number(document.getElementById('percentage').value),amount:Number(document.getElementById('amount').value),datetime:document.getElementById('datetime').value};
+ if(!d.name||d.percentage<=0||d.percentage>100||d.amount<=0)return;
+ const btn=e.submitter; if(btn){btn.disabled=true;btn.textContent='Opslaan…'}
+ try{await cloudInsert(d);drinks.push(d);saveLocal();e.target.reset();setNow();render();setCloudStatus('✓ Drankje opgeslagen in Supabase','ok');}
+ catch(err){console.error(err);alert('Drankje opslaan is mislukt: '+(err.message||err));setCloudStatus('Opslaan mislukt','error');}
+ finally{if(btn){btn.disabled=false;btn.textContent='Drank toevoegen'}}
+});
+document.addEventListener('click',e=>{
+ const id=e.target.dataset.delete;
+ if(id){(async()=>{try{await cloudDelete(id);drinks=drinks.filter(d=>d.id!==id);saveLocal();render()}catch(err){alert('Verwijderen mislukt: '+(err.message||err));}})()}
+});
+document.getElementById('clearAll').addEventListener('click',()=>{
+ if(!drinks.length)return;
+ if(confirm('Weet je zeker dat je alle geregistreerde drankjes en geschiedenis wilt verwijderen?')){(async()=>{try{await cloudDeleteAll();drinks=[];saveLocal();render()}catch(err){alert('Alles verwijderen mislukt: '+(err.message||err));}})()}
+});
+document.getElementById('exportBtn').addEventListener('click',()=>{
+ if(!drinks.length){alert('Er zijn nog geen gegevens om te exporteren.');return}
+ const rows=[['Naam','Alcoholpercentage','Hoeveelheid ml','Datum/tijd','Equivalent 33cl 5%','Pure alcohol gram'],...drinks.map(d=>[d.name,d.percentage,d.amount,d.datetime,equivalent(d).toFixed(3),pureAlcohol(d).toFixed(1)])];
+ const csv=rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(';')).join('\r\n');
+ const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='biermeter-geschiedenis.csv';a.click();URL.revokeObjectURL(a.href);
+});
+document.getElementById('modalClose').onclick=()=>document.getElementById('modal').classList.remove('show');
+setNow();render();initCloud();
+</script>
+</body>
+</html>
